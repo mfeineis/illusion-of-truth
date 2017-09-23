@@ -6,6 +6,9 @@ import Navigation exposing (Location)
 import UrlParser as Url exposing ((</>), Parser, oneOf, parseHash, s, string)
 
 
+-- ROUTING --
+
+
 type Route
     = Home
 
@@ -17,6 +20,10 @@ route =
         ]
 
 
+
+-- INTERNAL --
+
+
 routeToString : Route -> String
 routeToString page =
     let
@@ -24,11 +31,8 @@ routeToString page =
             case page of
                 Home ->
                     []
-
-        --Article slug ->
-        --    [ "article", Article.slugToString slug ]
     in
-        "#/" ++ String.join "/" pieces
+    "#/" ++ String.join "/" pieces
 
 
 
