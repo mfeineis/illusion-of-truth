@@ -56,21 +56,36 @@ subscriptions model =
     Sub.none
 
 
+initialPage : Page
+initialPage =
+    Blank
+
+
 init : ProgramFlags -> Location -> ( Model, Cmd Msg )
 init flags location =
     setRoute (Route.fromLocation location)
-        { pageState = Loaded Blank
+        { pageState = Loaded initialPage
         }
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    ( model, Cmd.none )
+    case msg of
+        SetRoute route ->
+            setRoute route model
 
 
 view : Model -> Html Msg
 view model =
-    Html.text "Nothing yet..."
+    case model.pageState of
+        TransitioningFrom _ ->
+            Html.text "...transitioning..."
+
+        Loaded NotFound ->
+            Html.text "Not found..."
+
+        Loaded Blank ->
+            Html.text "Blank page..."
 
 
 setRoute : Maybe Route -> Model -> ( Model, Cmd Msg )
